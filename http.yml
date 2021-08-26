@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd1
+spec:
+  selector:
+    matchLabels:
+      run: httpd1
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: httpd1
+    spec:
+      containers:
+      - name: httpd1
+        image: httpd:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "100m"
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: httpd1-svc
+  labels:
+    run: httpd1-svc
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30082
+  selector:
+    run: httpd1
+  type: NodePort

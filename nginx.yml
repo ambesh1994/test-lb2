@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx1
+spec:
+  selector:
+    matchLabels:
+      run: nginx1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: nginx1
+    spec:
+      containers:
+      - name: nginx1
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "100m"
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx1-svc
+  labels:
+    run: nginx1-svc
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30081
+  selector:
+    run: nginx1
+  type: NodePort
