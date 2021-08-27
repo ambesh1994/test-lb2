@@ -2,7 +2,7 @@ pipeline
 { 
     agent
     {    
-        label 'lp-k8master-1'
+        label 'piserver'
     }
         stages
         {
