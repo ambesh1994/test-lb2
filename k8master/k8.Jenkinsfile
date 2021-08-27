@@ -1,6 +1,6 @@
 pipeline 
 { 
-    agaent
+    agent
     {    
         label 'lp-k8master-1'
     }
